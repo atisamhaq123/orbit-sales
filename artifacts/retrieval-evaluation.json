@@ -14,7 +14,7 @@
       "expected": "pricing",
       "returned": [
         {
-          "id": "a99f7a58-3798-42d0-8d2d-eec5935038ee",
+          "id": "82ef207b-38ec-47e1-a0c9-eb4951a18a3f",
           "title": "Pricing.md",
           "location": "Section 1"
         }
@@ -26,7 +26,7 @@
       "expected": "pricing",
       "returned": [
         {
-          "id": "a99f7a58-3798-42d0-8d2d-eec5935038ee",
+          "id": "82ef207b-38ec-47e1-a0c9-eb4951a18a3f",
           "title": "Pricing.md",
           "location": "Section 1"
         }
@@ -38,7 +38,7 @@
       "expected": "security",
       "returned": [
         {
-          "id": "b4edf5f7-2b43-44ff-be2b-30cc37f5e99f",
+          "id": "468c92fc-de75-4916-ae63-4d61de166b4f",
           "title": "Security.md",
           "location": "Section 1"
         }
@@ -50,7 +50,7 @@
       "expected": "security",
       "returned": [
         {
-          "id": "b4edf5f7-2b43-44ff-be2b-30cc37f5e99f",
+          "id": "468c92fc-de75-4916-ae63-4d61de166b4f",
           "title": "Security.md",
           "location": "Section 1"
         }
@@ -62,7 +62,7 @@
       "expected": "onboarding",
       "returned": [
         {
-          "id": "ca99ea17-ad01-4a45-b8df-d4e502da5fea",
+          "id": "7f15f67e-cb33-4148-83a3-1ceee7826893",
           "title": "Onboarding.md",
           "location": "Onboarding"
         }
