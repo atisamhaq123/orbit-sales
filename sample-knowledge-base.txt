@@ -1,0 +1,104 @@
+ORBIT SALES - FICTIONAL KNOWLEDGE BASE
+Version: 1.0
+Sample date: 20 October 2026
+
+Purpose: Sample content for testing uploads, retrieval, cited answers and sales drafts. All policies, service commitments and customer examples below are fictional test data, not actual business promises. Prices and plan limits reflect the application's sample plan catalog.
+
+1. PRODUCT OVERVIEW
+
+Orbit Sales is a sales workspace for freelancers, founders and small teams. It brings together shared leads, a fixed sales pipeline, follow-ups, team knowledge and AI-assisted writing.
+
+The pipeline stages are New, Qualified, Proposal, Negotiation, Won and Lost. Each lead can include a company, email, phone, source, estimated deal value, assignee and notes.
+
+AI can draft follow-ups, summarize leads, suggest next actions and answer questions using uploaded knowledge. Users review and edit drafts before copying them. Orbit Sales does not automatically send sales messages.
+
+2. PRICING AND PLAN LIMITS
+
+Starter costs USD 19 per workspace per month. Starter includes 250 active leads, 2 workspace members including the owner, 50 successful AI actions per billing month, 25 active knowledge documents and 100 MB of knowledge storage.
+
+Pro costs USD 49 per workspace per month. Pro includes 2,500 active leads, 5 workspace members including the owner, 300 successful AI actions per billing month, 250 active knowledge documents and 1 GB of knowledge storage.
+
+Both plans include shared CRM records, follow-ups, saved AI drafts, knowledge-grounded answers with citations and team invitations. The owner counts toward the member limit. Pro is the appropriate sample plan for a five-person team; Starter supports at most two people.
+
+No annual price, enterprise price, discount or refund policy is defined in this sample knowledge base.
+
+3. SAMPLE CUSTOMER ONBOARDING PLAYBOOK
+
+Day 1: The owner signs up using an email address and password, confirms their email and creates a workspace. The owner chooses the appropriate subscription plan before adding live CRM records.
+
+Day 2: Add the first five leads manually. Record each lead's company, stage, estimated value, owner and relevant notes. Start with active conversations rather than importing an entire historical contact list.
+
+Day 3: Upload the current pricing document and sales playbook. Wait until the documents show ready before asking the AI assistant questions about them.
+
+Day 4: Invite teammates using their email addresses. The owner copies each invitation link and shares it directly with the intended person. Each invitation expires after seven days. The recipient must sign in with the intended verified email address.
+
+Day 5: Assign follow-ups to the team, review overdue tasks and generate a draft for one active lead. Review every claim and citation before sharing the draft outside the workspace.
+
+The fictional onboarding coordinator is Maya Chen. The sample onboarding target is five business days, depending on customer availability. This is a test target, not a guaranteed implementation deadline.
+
+4. SAMPLE SALES FOLLOW-UP GUIDELINES
+
+After a discovery call, send a short recap within one business day. Include the customer's stated objective, the main obstacle and one agreed next step.
+
+If the prospect has not replied, follow up after three business days. Reference their original question and offer one useful resource. Avoid claiming they agreed to a purchase or deadline unless the lead notes explicitly record that agreement.
+
+After a proposal, follow up after five business days. Ask whether pricing, security or onboarding questions are blocking the decision. Keep the message under 150 words and end with one clear question.
+
+Use a warm, direct tone. Do not invent discounts, testimonials, certifications, delivery dates or product capabilities.
+
+5. FICTIONAL CUSTOMER SCENARIOS
+
+Olivia Rhye at Layers is evaluating a team rollout. Her next step is to review a five-day onboarding outline. A suitable follow-up offers the outline and asks whether the proposed sequence fits the team's availability.
+
+Phoenix Baker at Sisyphus is planning for next quarter. His next step is to compare Starter and Pro against the expected number of users and active leads. Do not assume a confirmed budget.
+
+Lana Steiner at Catalog is reviewing security and support. Her next step is to receive a factual explanation of workspace access, private knowledge files and the fictional support hours listed below. Do not claim a security certification.
+
+Andi Lane at Quotient needs a workspace for five people. Pro supports five members including the owner, so it fits the stated team size. Starter does not fit a five-person team.
+
+6. KNOWLEDGE UPLOAD REQUIREMENTS
+
+Supported knowledge formats are plain text (.txt), Markdown (.md) and text-based PDF (.pdf). Each upload must be at most 10 MB. PDFs must contain selectable text and be at most 200 pages.
+
+Image-only or scanned PDFs need OCR before upload. Empty files and unsupported formats cannot be indexed. A document must finish processing and show ready before it can support a cited answer.
+
+Suggested first uploads are a pricing sheet, onboarding checklist, sales playbook and product FAQ. Replace outdated material instead of retaining conflicting copies as active policy.
+
+7. SECURITY AND ACCESS OVERVIEW
+
+Workspace membership controls access to shared leads, tasks and knowledge. Owners manage workspace settings, membership, invitations and billing. Members work with shared CRM records and knowledge according to current permissions.
+
+Conversations and generated answers belong to their creator. Uploaded originals are private and accessed through authorized, short-lived links. Removing a member revokes future authorized access; previously downloaded files cannot be recalled.
+
+This sample does not document SOC 2 certification, ISO 27001 certification, a penetration-test report, a contractual uptime SLA or a data residency commitment. Those claims cannot be supported using this document.
+
+8. FICTIONAL SUPPORT POLICY
+
+For testing only, the support contact is support@orbit-sales.example. The .example address is a placeholder and is not a working inbox.
+
+Fictional support hours are Monday through Friday, 09:00 to 17:00 UTC, excluding holidays. The sample response target is within one business day for both plans. No 24/7 support, phone support or guaranteed resolution time is offered in this sample policy.
+
+When reporting a problem, include the affected page, what you expected, what happened, when it occurred and a screenshot if available. Do not include passwords, API keys or private customer documents.
+
+9. BILLING AND PLAN CHANGES
+
+Workspace owners manage billing. Subscription changes are confirmed through Stripe. A lower plan can prevent additional usage when the workspace is already above its new limits; existing records are retained.
+
+For example, a workspace with four members exceeds Starter's two-member allowance. The owner must reduce membership before adding more members under Starter's limits. An expired or inactive subscription restricts writes that require a paid plan.
+
+This sample does not define a free trial duration or promise a refund. Ask the workspace owner for a separately documented commercial policy when those details are needed.
+
+10. SAMPLE QUESTIONS TO TEST
+
+- What is included in the Pro plan?
+- Which plan fits a team of five people?
+- How much does Pro cost compared with Starter?
+- Give me a five-day onboarding checklist.
+- Draft a short onboarding follow-up for Olivia at Layers.
+- What should I ask Lana during her security review?
+- Which file formats can I upload, and what is the size limit?
+- When does a team invitation expire?
+- What are the support hours and response target?
+- Does Orbit Sales automatically send follow-up emails?
+- Is SOC 2 certification documented in this knowledge base?
+- Is an enterprise discount or refund policy documented?
