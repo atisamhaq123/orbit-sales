@@ -2,7 +2,7 @@
 
 A focused sales CRM for founders and small teams: shared leads, a fixed pipeline, manual follow-ups, private AI conversations, source-grounded drafts, private knowledge ingestion, in-app invitations, and Stripe subscriptions. Next.js App Router 16.4.2, React 19.3.1, TypeScript, Supabase, pgvector, Stripe.
 
-ClientNest was inspected as a read-only reference. No reference branding, credentials, environment files, customers, or subscriptions were copied. No application email-sending mechanism is included. Google OAuth is the only authentication method.
+ClientNest was inspected as a read-only reference. No reference branding, credentials, environment files, customers, or subscriptions were copied. Authentication uses email and password through Supabase Auth. Supabase sends signup confirmation emails; the application does not send sales or invitation emails.
 
 ## Run locally
 
@@ -19,14 +19,15 @@ Open http://localhost:3100 and choose **Take a look around**, or open http://loc
 
 Copy `.env.example` to `.env.local`, then replace placeholders with NEW Orbit Sales credentials. Restart Next.js after changing public environment variables. Do not commit `.env.local` or pass secrets in URLs.
 
-### Supabase and Google
+### Supabase and email authentication
 
-1. Create an independent Supabase project. Enable pgvector. Apply, in order, `supabase/migrations/001_orbit.sql`, `002_access.sql`, and `003_recovery.sql` as the project database owner. The migrations expect Supabase's `auth`, `storage`, `extensions`, and `supabase_realtime` infrastructure. The local tests provide fixtures for this infrastructure.
-2. In Google Cloud, create a Web OAuth client with consent screen. Use Supabase's provider callback URL, `https://YOUR-ORBIT-PROJECT.supabase.co/auth/v1/callback`, as an authorized Google redirect URI. Set the Google client ID and secret in Supabase Auth → Providers → Google. Enable only identity scopes; no mailbox access.
-3. In Supabase Auth URL configuration, set the application site URL and allow `http://localhost:3100/auth/callback` and your production `/auth/callback`. Supabase handles the PKCE provider flow; the application exchanges the code into a cookie session. Redirect destinations are constrained to local application/invitation routes. The Next.js Proxy refreshes sessions.
-4. Disable email/password and any email-based signup/sign-in flows in Supabase Auth. This application never calls an email authentication API, mail transport, SMTP, magic link, reset email, or mailto action.
-5. Set `NEXT_PUBLIC_SUPABASE_URL`, the anon/publishable project key compatible with `@supabase/ssr`, and the server-only service role key. Keep `NEXT_PUBLIC_APP_URL` equal to the canonical browser origin, with no trailing slash. Mutations reject other origins.
-6. Sign in with Google. Onboarding explicitly offers workspace creation or pending invitations. Workspace creation uses a client creation key and a database uniqueness constraint; invitation acceptance never creates a personal workspace. The owner then subscribes in Plans & billing before creating CRM data.
+1. Create an independent Supabase project. Enable pgvector. Apply migrations in order: `001_orbit.sql`, `002_access.sql`, `003_recovery.sql`, and `004_email_auth.sql`. Existing installations need only the new migration. It removes the Google-only identity requirement and retains verified-email checks and workspace permissions.
+2. In Supabase Authentication > Sign In / Providers, enable **Email** and email/password signup. Disable Google if it was enabled. Keep **Confirm email** enabled for production.
+3. In Authentication > URL Configuration, set Site URL to `http://localhost:3100` during local development. Allow `http://localhost:3100/auth/callback` and the production callback URL.
+4. Signup uses Supabase's confirmation email and a PKCE callback. For confirmation links that also work in a different browser, set the **Confirm signup** email template link to `{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email`. The supplied RedirectTo already contains the validated destination in its next query parameter. The callback supports both token hashes and the standard PKCE code exchange. Configure Supabase SMTP for delivery to real users; the built-in sender has development restrictions and rate limits.
+5. Set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and the server-only `SUPABASE_SERVICE_ROLE_KEY`. Keep `NEXT_PUBLIC_APP_URL` equal to the canonical browser origin, with no trailing slash. Restart Next.js after environment changes.
+6. Open `/signup`, create an account, and confirm the email. Use `/login` for subsequent sessions. If email confirmation is disabled for development, signup logs in immediately. Existing Google-only users need an email/password credential configured in Supabase before password login.
+7. Onboarding offers workspace creation or pending invitations. Invitation links retain their destination through login/signup and require the intended verified email account. The owner subscribes in Plans & billing before creating CRM data.
 
 Workspace owners manage billing, membership, invitations and name. Members manage shared CRM/tasks/knowledge. Only a document uploader or workspace owner can replace/delete/retry it. Conversations and generations are private to their creator. Current membership is checked in server operations and RLS, including retrieval, signed downloads, queue activation and notification links. All raw table mutations are denied to browser roles except notification read state; authorized mutations go through constrained transactional RPCs.
 
@@ -80,7 +81,7 @@ Hybrid retrieval runs tenant-scoped vector similarity and PostgreSQL English ful
 
 ## Deploy, operate, restore
 
-Deploy the web app to a Next.js-compatible Node host with Node 24 (`npm ci`, `npm run build`, `npm run start`; set the host port via your start command as needed). Vercel requires the project root to be `orbit-sales`, the environment values above, a canonical origin, and function runtime limits that permit the 60-second AI handler. The worker is a separate long-running container; do not run it in a request function or in-memory queue. A reverse proxy must support the maximum upload size. Verify production Google redirect allowlists and HTTPS cookie behavior before customer access.
+Deploy the web app to a Next.js-compatible Node host with Node 24 (`npm ci`, `npm run build`, `npm run start`; set the host port via your start command as needed). Vercel requires the project root to be `orbit-sales`, the environment values above, a canonical origin, and function runtime limits that permit the 60-second AI handler. The worker is a separate long-running container; do not run it in a request function or in-memory queue. A reverse proxy must support the maximum upload size. Verify production email callback allowlists and HTTPS cookie behavior before customer access.
 
 Use separate development and production Supabase/Stripe/OpenAI projects. Apply migrations through a reviewed database migration process. Back up PostgreSQL with Supabase managed backups/PITR or encrypted `pg_dump` backups, and back up private Storage originals separately: database backups alone do not include their bytes. Test a restore in a separate project, restore originals to the same private paths, reapply provider settings/secrets, and reindex missing vectors. Keep billing writes disabled during a recovery until customer mappings and authoritative Stripe subscriptions reconcile. Never replay Stripe event payloads as entitlements without retrieving provider state.
 
@@ -96,6 +97,6 @@ npm run start
 npm run test:browser
 ```
 
-Browser tests use installed Chrome (`CHROME_PATH` override) and `TEST_URL` defaults to `http://localhost:3100`. They capture screenshots into `artifacts/`. Tests use actual PostgreSQL/pgvector in PGlite with fixture Supabase infrastructure, and deterministic test embeddings. Provider HTTP tests are mocked; the demo tests are simulated workflows. They do not certify Google OAuth, hosted Supabase Storage/Realtime, Stripe payments, live embeddings or LLM factual quality. See `VERIFICATION.md` and the JSON reports for actual results and remaining external checks.
+Browser tests use installed Chrome (`CHROME_PATH` override) and `TEST_URL` defaults to `http://localhost:3100`. They capture screenshots into `artifacts/`. Tests use actual PostgreSQL/pgvector in PGlite with fixture Supabase infrastructure, and deterministic test embeddings. Provider HTTP tests are mocked; the demo tests are simulated workflows. They do not certify email authentication, hosted Supabase Storage/Realtime, Stripe payments, live embeddings or LLM factual quality. See `VERIFICATION.md` and the JSON reports for actual results and remaining external checks.
 
 The MVP uses capped paged reads for its shared workspace snapshot (500 rows per page, up to 12,500 per table) and UI pagination for leads. Larger archival/task histories should move to server-driven per-view pagination/aggregates before exceeding this deliberately bounded snapshot. Google Fonts are an optional styling request with system font fallback; authentication and customer data never depend on them.

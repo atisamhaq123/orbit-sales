@@ -1,21 +1,21 @@
 # Orbit Sales verification
 
-Verified locally on 19 October 2026. Source: `orbit-sales/`. ClientNest remained read-only. No credentials, environment files, billing records or customer data were copied. There is no application email transport or email authentication flow.
+Verified locally on 19 October 2026. Source: `orbit-sales/`. ClientNest remained read-only. No credentials, environment files, billing records or customer data were copied. Email/password login and signup now use Supabase Auth; signup confirmation email delivery still requires hosted configuration.
 
 ## Completed implementation
 
 - Original graphite/cyan/violet landing page and responsive application: expanded desktop sidebar, compact tablet navigation, trapped mobile drawer, native accessible dialogs, focus restoration and reduced motion.
 - Real routes for overview, leads/details, pipeline, follow-ups, knowledge, assistant, inbox/invitations, team, billing, settings, and secure invitation acceptance. Invalid application routes return 404.
-- Explicit browser-local demo with fictional data and persistent edits/reset. Demo simulations are labeled. Sign-in uses normal anchors to prevent prefetching OAuth endpoints.
-- Google PKCE OAuth, cookie sessions, session refresh, protected live routes, verified identity checks and logout. Explicit onboarding and idempotent workspace creation; invitation acceptance never bootstraps an extra workspace.
+- Explicit browser-local demo with fictional data and persistent edits/reset. Demo simulations are labeled. Authentication links open the email login/signup pages.
+- Email/password login/signup, email confirmation callbacks, cookie sessions, session refresh, protected live routes, verified identity checks and logout. Explicit onboarding and idempotent workspace creation; invitation acceptance never bootstraps an extra workspace.
 - PostgreSQL persistent leads, tasks, activity, workspace settings, memberships, notifications, private conversations and generated drafts. Fixed six-stage pipeline, estimated USD deal values, stage/assignee/search/archive filters, lead pagination, UTC task storage and timezone display.
-- Three Supabase migrations, RLS and column grants, generated database row types, private original storage, composite tenant foreign keys, transactional writes/quotas, optimistic edit versions, and server origin checks.
+- Four Supabase migrations, RLS and column grants, generated database row types, private original storage, composite tenant foreign keys, transactional writes/quotas, optimistic edit versions, and server origin checks.
 - Hashed seven-day invitations, verified-email binding, token rotation/revocation, atomic acceptance, duplicate prevention, seat checks and immediate server/database access revocation.
 - Durable ingestion queue with leases, fencing, backoff, terminal errors, retry, replacement activation, extraction bounds, success/failure notifications, and storage cleanup. Deployable worker container included.
 - Real pgvector + PostgreSQL full-text hybrid retrieval with RRF; current-source checks, bounded/deduplicated evidence, readable citations and short-lived downloads. Revoked/deleted/superseded evidence cannot justify persisted answers.
 - Server-side structured AI draft/summary/next-action/knowledge operations, editable outputs, copy/save, prompt-injection boundaries, citation validation, timeouts, usage reservations, idempotent settlement, refunds and abandoned-reservation recovery.
 - Owner-only Stripe Checkout/portal, plan-change confirmation, reconciliation, customer/price/workspace association checks, distributed billing lease, raw-body signatures, event deduplication, stale-period guards and server entitlements.
-- `.env.example`, setup/Google/Stripe/AI/worker/deployment/backup instructions and fictional seed documentation.
+- `.env.example`, setup/email/Stripe/AI/worker/deployment/backup instructions and fictional seed documentation.
 
 ## Actual local results
 
@@ -56,7 +56,7 @@ See `artifacts/retrieval-evaluation.json` and `tests/retrieval-fixtures.json`.
 
 No Orbit Sales credentials were provided or borrowed. The following remain **unconfigured and unverified live**:
 
-1. New Supabase project, migration deployment, Google OAuth credentials/redirect allowlists and a real verified Google session.
+1. New Supabase project, migration deployment, Email provider and SMTP configuration, migration 004 deployment, callback allowlists and a real verified email/password session.
 2. Hosted Supabase Storage and Realtime behavior, production RLS under the actual gateway, multi-process invitation/worker contention, and cross-account revocation through real sessions.
 3. Orbit-specific Stripe prices, portal settings, webhook forwarding/endpoint, Checkout payments and full subscription lifecycle tests.
 4. OpenAI key/chat model access, live embedding relevance, generated-answer/citation quality, provider failure recovery across the deployed infrastructure.
@@ -67,8 +67,12 @@ Follow the corresponding procedures in `README.md`. The local results above must
 ## Known boundaries
 
 - Ownership transfer and workspace deletion are deferred and called out in the interface. Owners cannot leave.
-- No email sending, SMTP, magic links, password resets, automated outreach, calendar integration, custom stages, CSV, OCR or autonomous AI actions.
+- Supabase sends signup confirmation emails. Sales email sending, password reset UI, automated outreach, calendar integration, custom stages, CSV, OCR and autonomous AI actions are outside the current scope.
 - The workspace snapshot uses 500-row database pages with a 12,500-row/table cap; larger archival/task histories need server-driven per-view pagination and aggregates. Normal paid active-lead limits are 250/2,500.
 - Database authorization takes effect immediately. Already rendered data can remain in a browser until the next authorized refresh; the inbox/data fallback polls every 20 seconds. Already issued signed downloads expire within 60 seconds. Neither old browser content nor old citations are accepted as authorization for a new operation.
 - Storage remains reserved until the worker successfully removes bytes and confirms cleanup. The worker must remain running for ingestion, abandoned-upload recovery and storage reclamation.
 - Retrieval currently uses exact tenant-scoped vector search, appropriate for the bounded MVP corpus. Large deployments should benchmark scoped ANN search and rerun labeled relevance evaluations.
+
+## Email authentication update
+
+The email authentication change passes TypeScript, all 34 automated tests (now using email identities and migration 004), and `node tests/email-auth.browser.mjs`. The new browser checks mock Supabase HTTP responses and cover password login errors, signup confirmation feedback, password matching, invitation destination preservation and safe redirects. They create no accounts and send no email. Hosted email signup, delivery and login have not been verified. Earlier full demo browser results above predate this authentication update.
