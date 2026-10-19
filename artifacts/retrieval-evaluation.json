@@ -1,0 +1,79 @@
+{
+  "engine": "Actual PostgreSQL + pgvector + full-text RRF k=60 in PGlite",
+  "embeddings": "Deterministic orthogonal test vectors, not live OpenAI embeddings",
+  "liveProviderVerified": false,
+  "queries": 6,
+  "recallAt3": 1,
+  "citationReferenceValidity": 1,
+  "foreignWorkspaceResults": 0,
+  "insufficientEvidence": true,
+  "answerGeneration": "No live model called; insufficient evidence retrieval branch and demo response covered separately.",
+  "results": [
+    {
+      "query": "Starter pricing monthly",
+      "expected": "pricing",
+      "returned": [
+        {
+          "id": "ec0033bd-0ffc-4046-b1fa-0dde8a4c2e45",
+          "title": "Pricing.md",
+          "location": "Section 1"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "query": "How many members in Pro pricing?",
+      "expected": "pricing",
+      "returned": [
+        {
+          "id": "ec0033bd-0ffc-4046-b1fa-0dde8a4c2e45",
+          "title": "Pricing.md",
+          "location": "Section 1"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "query": "private originals security",
+      "expected": "security",
+      "returned": [
+        {
+          "id": "2085a4a6-97bf-419d-89ed-40ae4ecd342e",
+          "title": "Security.md",
+          "location": "Section 1"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "query": "membership authorization downloads",
+      "expected": "security",
+      "returned": [
+        {
+          "id": "2085a4a6-97bf-419d-89ed-40ae4ecd342e",
+          "title": "Security.md",
+          "location": "Section 1"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "query": "onboarding workspace playbook",
+      "expected": "onboarding",
+      "returned": [
+        {
+          "id": "8d348b68-ebb3-466f-9d9a-49d345f84b8e",
+          "title": "Onboarding.md",
+          "location": "Onboarding"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "query": "quantum banana guarantees",
+      "expected": null,
+      "returned": [],
+      "passed": true
+    }
+  ]
+}

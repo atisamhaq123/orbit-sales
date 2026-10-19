@@ -1,0 +1,13 @@
+export const stages = ['New','Qualified','Proposal','Negotiation','Won','Lost'] as const;
+export type Stage = typeof stages[number];
+export type Lead = {id:string;workspace_id:string;name:string;company:string;email:string;phone:string;source:string;stage:Stage;assignee_id:string|null;value:number;notes:string;archived:boolean;version:number;created_at:string;updated_at:string};
+export type Task = {id:string;workspace_id:string;lead_id:string;title:string;assignee_id:string|null;due_at:string;priority:string;completed:boolean;version:number};
+export type Member = {user_id:string;workspace_id:string;name:string;email:string;role:'owner'|'member'};
+export type Citation = {id:string;document_id:string;title:string;location:string};
+export type Document = {id:string;workspace_id:string;title:string;size:number;version:number;status:string;error:string|null;uploader_id:string;indexed_at:string|null;active_version_id:string|null};
+export type Generation = {id:string;lead_id:string|null;conversation_id:string|null;operation:string;question?:string;output:string;citations:Citation[];status:string;created_at:string};
+export type Notification = {id:string;workspace_id:string|null;title:string;body:string;href:string;read_at:string|null;invitation_id?:string};
+export type Invitation = {id:string;workspace_id:string;workspace_name?:string;email:string;status:string;expires_at:string};
+export type Workspace = {id:string;name:string;role:'owner'|'member';plan:'starter'|'pro'|null;subscription_status:string;period_end?:string;cancel_at_period_end?:boolean};
+export type Data = {user:{id:string;email:string;name:string;timezone:string};workspace:Workspace|null;workspaces:Workspace[];members:Member[];leads:Lead[];tasks:Task[];documents:Document[];generations:Generation[];notifications:Notification[];invitations:Invitation[];activity:{id:string;lead_id:string|null;message:string;created_at:string}[];conversations:{id:string;title:string}[];ai_used:number;storage_used:number};
+export type Mutation = {action:string;workspace?:string;id?:string;version?:number;[key:string]:unknown};

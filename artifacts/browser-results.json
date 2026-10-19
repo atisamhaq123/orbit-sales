@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "responsiveWidths": [
+    360,
+    390,
+    768,
+    1024,
+    1440
+  ],
+  "routesPerWidth": 11,
+  "checks": [
+    "lead create/edit/persistence",
+    "pipeline update",
+    "follow-up create/complete",
+    "AI draft editing/save/citations (simulated)",
+    "assistant cited/insufficient evidence (simulated)",
+    "document state simulation",
+    "invitation creation (simulated)",
+    "dialog escape/focus restoration",
+    "billing demo isolation",
+    "55 responsive application views",
+    "five landing widths",
+    "mobile drawer",
+    "browser back",
+    "no runtime errors",
+    "zero live API requests from demo",
+    "unconfigured live service errors"
+  ],
+  "liveIntegrationsVerified": false
+}

@@ -1,0 +1,8 @@
+FROM node:24-bookworm-slim
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+COPY src/lib/provider.ts src/lib/rag.ts src/lib/extraction.ts ./src/lib/
+COPY worker ./worker
+USER node
+CMD ["node", "--experimental-strip-types", "worker/ingest.ts"]

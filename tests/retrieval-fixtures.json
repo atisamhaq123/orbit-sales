@@ -1,0 +1,16 @@
+{
+ "embeddingMode":"Deterministic orthogonal test vectors, not live OpenAI embeddings",
+ "documents":[
+  {"key":"pricing","title":"Pricing.md","text":"Starter pricing is 19 USD monthly for two members. Pro pricing is 49 USD monthly for five members.","axis":1},
+  {"key":"security","title":"Security.md","text":"Workspace security uses membership authorization, private originals and short-lived source downloads.","axis":2},
+  {"key":"onboarding","title":"Onboarding.md","text":"Onboarding starts with a focused workspace and a shared sales playbook.","axis":0}
+ ],
+ "questions":[
+  {"query":"Starter pricing monthly","expected":"pricing","axis":1},
+  {"query":"How many members in Pro pricing?","expected":"pricing","axis":1},
+  {"query":"private originals security","expected":"security","axis":2},
+  {"query":"membership authorization downloads","expected":"security","axis":2},
+  {"query":"onboarding workspace playbook","expected":"onboarding","axis":0},
+  {"query":"quantum banana guarantees","expected":null,"axis":10}
+ ]
+}

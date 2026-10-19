@@ -1,0 +1,1 @@
+export default function Loading(){return <div className="loading-shell"><aside className="skeleton"/><main><div className="skeleton"/><div className="skeleton"/><div className="skeleton"/></main></div>;}
